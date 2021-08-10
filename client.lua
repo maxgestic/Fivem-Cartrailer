@@ -162,6 +162,9 @@ end, false)
 _menuPool = NativeUI.CreatePool()
 trailerMenu = NativeUI.CreateMenu("Trailer Menu", "by SirChainsmokerGollum")
 _menuPool:Add(trailerMenu)
+_menuPool:MouseControlsEnabled (false)
+_menuPool:MouseEdgeEnabled (false)
+_menuPool:ControlDisablingEnabled(false)
 
 rampDown = false
 
