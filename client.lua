@@ -11,6 +11,8 @@ Citizen.CreateThread(function()
         	for vehicle in EnumerateVehicles() do
 				if GetEntityModel(vehicle) == GetHashKey("trailersmall") and (Vdist2(GetEntityCoords(GetPlayerPed(-1)), GetEntityCoords(vehicle)) < 70) then 
 					
+					NetworkRequestControlOfEntity(vehicle)
+
 					nearestTrailer = vehicle
 
 		            trailerMenu:Visible(not trailerMenu:Visible())
@@ -109,6 +111,8 @@ function attachCar()
 
 		if not (veh == nil) then
 
+			NetworkRequestControlOfEntity(veh)
+			NetworkRequestControlOfEntity(trailer)
 			AttachEntityToEntity(veh, trailer, 20, 0, -1.5, GetEntityHeightAboveGround(veh)-0.63, 0, 0, 0, false, false, true, false, 20, true)
 
 		else
@@ -136,7 +140,9 @@ function detachCar()
 	print(veh)
 
 	SetEntityCoords(veh, GetEntityCoords(veh).x, GetEntityCoords(veh).y, GetEntityCoords(veh).x + 0.5, 0, 0, 0, false)
-
+	SetNetworkIdCanMigrate(NetworkGetNetworkIdFromEntity(veh), false)
+	NetworkRequestControlOfEntity(veh)
+	SetNetworkIdCanMigrate(NetworkGetNetworkIdFromEntity(veh), true)
 	DetachEntity(veh, true, true)
 end
 
